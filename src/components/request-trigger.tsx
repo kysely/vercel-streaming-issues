@@ -6,11 +6,13 @@ import { useCallback, useRef, useState } from "react";
 const styles = {
   button: "bg-white border text-black p-2 rounded",
   buttonLoading: "border-red-300 text-red-500",
-  result: "rounded p-2 border border-green-500 bg-green-100 text-green-900",
+  result: "font-mono rounded p-2 border border-green-500 bg-green-100 text-green-900",
   error: "rounded p-2 border border-orange-500 bg-orange-100 text-orange-900",
+  trace: "font-mono text-sm pl-2",
 };
 
 type Outcome = {
+  traceId?: string;
   result?: string;
   error?: string;
 };
@@ -24,16 +26,15 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
 
   const trigger = useCallback(async () => {
     abortControllerRef.current = new AbortController();
+    const traceId = nanoid(8);
 
     setLoading(true);
-    setOutcome({});
+    setOutcome({ traceId });
 
     try {
       const response = await fetch(endpoint, {
         method: "POST",
-        body: JSON.stringify({
-          traceId: nanoid(8),
-        }),
+        body: JSON.stringify({ traceId }),
         headers: { "Content-Type": "application/json" },
         signal: abortControllerRef.current.signal,
       });
@@ -52,7 +53,7 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
         }
         // Update the chat state with the new message tokens.
         responseText += decoder.decode(value, { stream: true });
-        setOutcome({ result: responseText });
+        setOutcome((o) => ({ ...o, result: responseText }));
 
         // The request has been aborted, stop reading the stream.
         if (abortControllerRef.current.signal.aborted) {
@@ -61,7 +62,7 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
         }
       }
 
-      setOutcome({ result: responseText });
+      setOutcome((o) => ({ ...o, result: responseText }));
     } catch (e) {
       console.error(e);
       setOutcome((o) => ({ ...o, error: String(e) }));
@@ -86,10 +87,13 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
         </button>
       )}
 
-      {outcome.error ? <p className={styles.error}>{outcome.error}</p> : null}
+      {outcome.traceId ? (
+        <p className={styles.trace}>trace: {outcome.traceId}</p>
+      ) : null}
       {outcome.result ? (
         <p className={styles.result}>{outcome.result}</p>
       ) : null}
+      {outcome.error ? <p className={styles.error}>{outcome.error}</p> : null}
     </div>
   );
 }
