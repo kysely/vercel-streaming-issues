@@ -5,6 +5,7 @@ import { useCallback, useRef, useState } from "react";
 
 const styles = {
   button: "bg-white border text-black p-2 rounded",
+  buttonLoading: "border-red-300 text-red-500",
   result: "rounded p-2 border border-green-500 bg-green-100 text-green-900",
   error: "rounded p-2 border border-orange-500 bg-orange-100 text-orange-900",
 };
@@ -49,12 +50,15 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
     <div className="flex flex-col py-6 space-y-2">
       <p className="font-mono">{endpoint}</p>
       {isLoading ? (
-        <button className={styles.button} onClick={stop}>
-          Abort
+        <button
+          className={styles.button + " " + styles.buttonLoading}
+          onClick={stop}
+        >
+          Abort Loading
         </button>
       ) : (
         <button className={styles.button} onClick={trigger}>
-          Trigger
+          Trigger Fetch
         </button>
       )}
 
