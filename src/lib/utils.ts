@@ -22,6 +22,8 @@ export function createLazyStream<T>(
   iterator: AsyncIterableIterator<T>,
   { log }: { log: Logger }
 ) {
+  const encoder = new TextEncoder();
+
   return new ReadableStream({
     async pull(controller) {
       log("PULL");
@@ -31,7 +33,8 @@ export function createLazyStream<T>(
         log("DONE");
         controller.close();
       } else {
-        controller.enqueue(JSON.stringify(value) + "\n");
+        const encodedChunk = encoder.encode(JSON.stringify(value) + "\n");
+        controller.enqueue(encodedChunk);
       }
     },
     async cancel(reason) {
