@@ -37,7 +37,31 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
         headers: { "Content-Type": "application/json" },
         signal: abortControllerRef.current.signal,
       });
-      setOutcome({ result: await response.text() });
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+
+      let responseText = "";
+
+      while (true) {
+        if (!reader) return;
+
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+        // Update the chat state with the new message tokens.
+        responseText += decoder.decode(value, { stream: true });
+        setOutcome({ result: responseText });
+
+        // The request has been aborted, stop reading the stream.
+        // if (abortControllerRef.current.signal.aborted) {
+        //   reader.cancel();
+        //   break;
+        // }
+      }
+
+      setOutcome({ result: responseText });
     } catch (e) {
       console.error(e);
       setOutcome({ error: String(e) });
