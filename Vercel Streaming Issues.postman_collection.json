@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "0fdbd239-b98a-4936-b350-88af7bad3428",
+		"name": "Vercel Streaming Issues",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11364430"
+	},
+	"item": [
+		{
+			"name": "NodeJS Endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"traceId\": \"postman-request\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/nodejs-endpoint",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"nodejs-endpoint"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edge Endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"traceId\": \"postman-request\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/edge-endpoint",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"edge-endpoint"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Streaming NodeJS Endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"traceId\": \"postman-request\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/nodejs-streaming-endpoint",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"nodejs-streaming-endpoint"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Streaming Edge Endpoint",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"traceId\": \"postman-request\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/edge-streaming-endpoint",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"edge-streaming-endpoint"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
