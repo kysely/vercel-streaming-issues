@@ -34,5 +34,8 @@ export function createLazyStream<T>(
         controller.enqueue(JSON.stringify(value) + "\n");
       }
     },
+    async cancel(reason) {
+      log(`CANCEL: ${reason}`);
+    },
   });
 }
