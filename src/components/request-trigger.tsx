@@ -55,10 +55,10 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
         setOutcome({ result: responseText });
 
         // The request has been aborted, stop reading the stream.
-        // if (abortControllerRef.current.signal.aborted) {
-        //   reader.cancel();
-        //   break;
-        // }
+        if (abortControllerRef.current.signal.aborted) {
+          reader.cancel();
+          break;
+        }
       }
 
       setOutcome({ result: responseText });
