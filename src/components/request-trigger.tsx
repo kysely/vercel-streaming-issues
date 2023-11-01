@@ -64,7 +64,7 @@ export function RequestTrigger({ endpoint }: { endpoint: string }) {
       setOutcome({ result: responseText });
     } catch (e) {
       console.error(e);
-      setOutcome({ error: String(e) });
+      setOutcome((o) => ({ ...o, error: String(e) }));
     } finally {
       setLoading(false);
     }
